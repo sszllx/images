@@ -1,4 +1,4 @@
-#gitlab安装说明
+# gitlab安装说明
 1. 拉取gitlab-ee镜像
 ```bash
 docker pull gitlab/gitlab-ee:latest

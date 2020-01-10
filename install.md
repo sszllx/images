@@ -1,1 +1,19 @@
-<!DOCTYPE html> <html lang="zh"> <head> <meta charset="utf-8"/>  </head> <body><h1 id="h1-gitlab-"><a name="gitlab安装说明" class="reference-link"></a><span class="header-link octicon octicon-link"></span>gitlab安装说明</h1><ol> <li>拉取gitlab-ee镜像<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-bash"><span class="pln">docker pull gitlab</span><span class="pun">/</span><span class="pln">gitlab</span><span class="pun">-</span><span class="pln">ee</span><span class="pun">:</span><span class="pln">latest</span></code></li></ol></pre> </li><li>安装镜像<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-bash"><span class="pln">sudo docker run </span><span class="pun">--</span><span class="pln">detach \</span></code></li><li class="L1"><code class="lang-bash"><span class="pun">--</span><span class="pln">hostname </span><span class="lit">101.133</span><span class="pun">.</span><span class="lit">142.164</span><span class="pln"> \</span></code></li><li class="L2"><code class="lang-bash"><span class="pun">--</span><span class="pln">publish </span><span class="lit">8443</span><span class="pun">:</span><span class="lit">443</span><span class="pln"> </span><span class="pun">--</span><span class="pln">publish </span><span class="lit">8037</span><span class="pun">:</span><span class="lit">80</span><span class="pln"> </span><span class="pun">--</span><span class="pln">publish </span><span class="lit">8022</span><span class="pun">:</span><span class="lit">22</span><span class="pln"> \</span></code></li><li class="L3"><code class="lang-bash"><span class="pun">--</span><span class="pln">name gitlab \</span></code></li><li class="L4"><code class="lang-bash"><span class="pun">--</span><span class="pln">restart always \</span></code></li><li class="L5"><code class="lang-bash"><span class="pun">--</span><span class="pln">volume </span><span class="pun">/</span><span class="pln">srv</span><span class="pun">/</span><span class="pln">gitlab</span><span class="pun">/</span><span class="pln">config</span><span class="pun">:/</span><span class="pln">etc</span><span class="pun">/</span><span class="pln">gitlab \</span></code></li><li class="L6"><code class="lang-bash"><span class="pun">--</span><span class="pln">volume </span><span class="pun">/</span><span class="pln">srv</span><span class="pun">/</span><span class="pln">gitlab</span><span class="pun">/</span><span class="pln">logs</span><span class="pun">:/</span><span class="pln">var</span><span class="pun">/</span><span class="pln">log</span><span class="pun">/</span><span class="pln">gitlab \</span></code></li><li class="L7"><code class="lang-bash"><span class="pun">--</span><span class="pln">volume </span><span class="pun">/</span><span class="pln">srv</span><span class="pun">/</span><span class="pln">gitlab</span><span class="pun">/</span><span class="pln">data</span><span class="pun">:/</span><span class="pln">var</span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">gitlab \</span></code></li><li class="L8"><code class="lang-bash"><span class="pln">gitlab</span><span class="pun">/</span><span class="pln">gitlab</span><span class="pun">-</span><span class="pln">ee</span><span class="pun">:</span><span class="pln">latest</span></code></li></ol></pre> </li><li>访问<a href="http://101.133.142.164:8037">http://101.133.142.164:8037</a> 测试</li><li>定时备份</li></ol> </body> </html>
+#gitlab安装说明
+1. 拉取gitlab-ee镜像
+```bash
+docker pull gitlab/gitlab-ee:latest
+```
+2. 安装镜像
+```bash
+sudo docker run --detach \
+  --hostname 101.133.142.164 \
+  --publish 8443:443 --publish 8037:80 --publish 8022:22 \
+  --name gitlab \
+  --restart always \
+  --volume /srv/gitlab/config:/etc/gitlab \
+  --volume /srv/gitlab/logs:/var/log/gitlab \
+  --volume /srv/gitlab/data:/var/opt/gitlab \
+  gitlab/gitlab-ee:latest
+```
+3. 访问http://101.133.142.164:8037 测试
+4. 定时备份

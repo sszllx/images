@@ -16,7 +16,7 @@ sudo docker run --detach \
   gitlab/gitlab-ee:latest
 ```
 3. 访问http://101.133.142.164:8037 测试
-4. 备份
+4. 备份数据
 ```bash
 docker exec -t <container name> gitlab-backup create
 ```
@@ -59,7 +59,11 @@ Backup task is done.
 root@iZu:/srv/gitlab/data/backups# ls
 1578886437_2020_01_13_12.6.3-ee_gitlab_backup.tar
 ```
-5. 恢复
+5. 恢复数据
 ```bash
 docker exec -it <container name> gitlab-backup restore
+```
+6. 备份配置
+```bash
+docker exec -t gitlab /bin/sh -c 'umask 0077; tar cfz /etc/gitlab/config_backup/$(date "+etc-gitlab-%s.tgz") -C / etc/gitlab'
 ```

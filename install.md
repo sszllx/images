@@ -16,4 +16,11 @@ sudo docker run --detach \
   gitlab/gitlab-ee:latest
 ```
 3. 访问http://101.133.142.164:8037 测试
-4. 定时备份
+4. 备份
+```bash
+docker exec -t <container name> gitlab-backup create
+```
+5. 恢复
+```bash
+docker exec -it <container name> gitlab-backup restore
+```

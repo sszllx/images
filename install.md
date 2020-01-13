@@ -20,6 +20,45 @@ sudo docker run --detach \
 ```bash
 docker exec -t <container name> gitlab-backup create
 ```
+```bash
+root@iZu:/mnt/work# docker exec -t gitlab gitlab-backup create
+2020-01-13 03:33:56 +0000 -- Dumping database ...
+Dumping PostgreSQL database gitlabhq_production ... [DONE]
+2020-01-13 03:33:57 +0000 -- done
+2020-01-13 03:33:57 +0000 -- Dumping repositories ...
+2020-01-13 03:33:57 +0000 -- done
+2020-01-13 03:33:57 +0000 -- Dumping uploads ...
+2020-01-13 03:33:57 +0000 -- done
+2020-01-13 03:33:57 +0000 -- Dumping builds ...
+2020-01-13 03:33:57 +0000 -- done
+2020-01-13 03:33:57 +0000 -- Dumping artifacts ...
+2020-01-13 03:33:57 +0000 -- done
+2020-01-13 03:33:57 +0000 -- Dumping pages ...
+2020-01-13 03:33:57 +0000 -- done
+2020-01-13 03:33:57 +0000 -- Dumping lfs objects ...
+2020-01-13 03:33:57 +0000 -- done
+2020-01-13 03:33:57 +0000 -- Dumping container registry images ...
+2020-01-13 03:33:57 +0000 -- [DISABLED]
+Creating backup archive: 1578886437_2020_01_13_12.6.3-ee_gitlab_backup.tar ... done
+Uploading backup archive to remote storage  ... skipped
+Deleting tmp directories ... done
+done
+done
+done
+done
+done
+done
+done
+Deleting old backups ... skipping
+Warning: Your gitlab.rb and gitlab-secrets.json files contain sensitive data
+and are not included in this backup. You will need these files to restore a backup.
+Please back them up manually.
+Backup task is done.
+```
+```bash
+root@iZu:/srv/gitlab/data/backups# ls
+1578886437_2020_01_13_12.6.3-ee_gitlab_backup.tar
+```
 5. 恢复
 ```bash
 docker exec -it <container name> gitlab-backup restore

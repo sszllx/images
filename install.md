@@ -6,8 +6,8 @@ docker pull gitlab/gitlab-ee:latest
 2. 安装镜像
 ```bash
 sudo docker run --detach \
-  --hostname 101.133.142.164 \
-  --publish 8443:443 --publish 8037:80 --publish 8022:22 \
+  --hostname gitlab.zfkunyu.com \
+  --publish 443:443 --publish 80:80 --publish 8022:22 \
   --name gitlab \
   --restart always \
   --volume /srv/gitlab/config:/etc/gitlab \
@@ -15,7 +15,7 @@ sudo docker run --detach \
   --volume /srv/gitlab/data:/var/opt/gitlab \
   gitlab/gitlab-ee:latest
 ```
-3. 访问http://101.133.142.164:8037 测试
+3. 访问https://gitlab.zfkunyu.com 测试
 4. 备份数据
 ```bash
 docker exec -t <container name> gitlab-backup create
@@ -72,4 +72,15 @@ docker exec -t gitlab /bin/sh -c 'umask 0077; tar cfz /etc/gitlab/config_backup/
 10 01 * * *  docker exec -t gitlab gitlab-backup create  && cd /srv/gitlab/data/backups && cp $(ls -t | head -n1) /mnt/work/gitlab-backup/
 20 01 * * *  docker exec -t gitlab /bin/sh -c 'umask 0077; tar cfz /etc/gitlab/config_backup/$(date "+etc-gitlab-\%s.tgz") -C / etc/gitlab --exclude=etc/gitlab/config_backup' && cd /srv/gitlab/config/config_backup && cp $(ls -t | head -n1) /mnt/work/gitlab-backup/
 
+```
+8. 一些配置修改
+/etc/gitlab/gitlab.rb中
+```bash
+#git clone ssh时会增加启动时的端口号
+gitlab_rails['gitlab_shell_ssh_port'] = 8022
+#配置https
+external_url 'https://gitlab.zfkunyu.com'
+nginx['redirect_http_to_https'] = true
+nginx['ssl_certificate'] = "/etc/gitlab/ssl/gitlab.zfkunyu.com.crt"
+nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/gitlab.zfkunyu.com.key"
 ```

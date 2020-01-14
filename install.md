@@ -70,6 +70,6 @@ docker exec -t gitlab /bin/sh -c 'umask 0077; tar cfz /etc/gitlab/config_backup/
 7. 配置定时任务
 ```bash
 10 01 * * *  docker exec -t gitlab gitlab-backup create  && cd /srv/gitlab/data/backups && cp $(ls -t | head -n1) /mnt/work/gitlab-backup/
-docker exec -t gitlab /bin/sh -c 'umask 0077; tar cfz /etc/gitlab/config_backup/$(date "+etc-gitlab-\%s.tgz") -C / etc/gitlab --exclude=etc/gitlab/config_backup' && cd /srv/gitlab/config/config_backup && cp $(ls -t | head -n1) /mnt/work/gitlab-backup/
+20 01 * * *  docker exec -t gitlab /bin/sh -c 'umask 0077; tar cfz /etc/gitlab/config_backup/$(date "+etc-gitlab-\%s.tgz") -C / etc/gitlab --exclude=etc/gitlab/config_backup' && cd /srv/gitlab/config/config_backup && cp $(ls -t | head -n1) /mnt/work/gitlab-backup/
 
 ```
